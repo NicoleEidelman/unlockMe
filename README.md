@@ -77,6 +77,7 @@ VoiceCommandRecognizer.java – Speech recognition logic
 WifiChecker.java, TimeChecker.java, ShakeDetector.java, ChargingStatusChecker.java – Logic modules
 
 TwoFactorAuthenticator.java – Handles SMS-based verification
+
 ---
 
 ##  Future Ideas

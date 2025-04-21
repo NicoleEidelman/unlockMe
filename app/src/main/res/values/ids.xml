@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="wifi_circle" type="id"/>
+    <item name="time_circle" type="id"/>
+    <item name="motion_circle" type="id"/>
+    <item name="voice_circle" type="id"/>
+    <item name="twofa_circle" type="id"/>
+    <item name="power_circle" type="id"/>
+    <item name="connections" type="id"/>
+    <item name="lockIcon" type="id"/>
+    <item name="successMessage" type="id"/>
+    <item name="successSubMessage" type="id"/>
+</resources>

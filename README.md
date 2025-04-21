@@ -72,13 +72,3 @@ WifiChecker.java, TimeChecker.java, ShakeDetector.java, ChargingStatusChecker.ja
 
 TwoFactorAuthenticator.java – Handles SMS-based verification
 
----
-
-##  Future Ideas
-
-- Save authentication state in SharedPreferences
-- Add biometric (fingerprint) as an optional extra
-- Visual feedback while voice recording
-- Localization support (English / Hebrew)
-
----

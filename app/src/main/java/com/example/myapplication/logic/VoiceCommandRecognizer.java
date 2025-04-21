@@ -16,21 +16,18 @@ public class VoiceCommandRecognizer {
     private final Context context;
     private final OnCommandRecognizedListener callback;
     private SpeechRecognizer speechRecognizer;
-    private final TextView instructionText;
 
     public interface OnCommandRecognizedListener {
         void onCommandRecognized(String command);
     }
 
-    public VoiceCommandRecognizer(Context context, OnCommandRecognizedListener callback, TextView instructionText) {
+    public VoiceCommandRecognizer(Context context, OnCommandRecognizedListener callback) {
         this.context = context;
         this.callback = callback;
-        this.instructionText = instructionText;
     }
 
     public void startListening() {
         if (!SpeechRecognizer.isRecognitionAvailable(context)) {
-            instructionText.setText("Speech recognition not available on this device.");
             return;
         }
 
@@ -39,7 +36,6 @@ public class VoiceCommandRecognizer {
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
 
-        instructionText.setText("Listening for 'open' command...");
 
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
             @Override
@@ -59,7 +55,6 @@ public class VoiceCommandRecognizer {
 
             @Override
             public void onError(int error) {
-                instructionText.setText("Speech recognition error: " + error);
             }
 
             @Override
@@ -69,12 +64,9 @@ public class VoiceCommandRecognizer {
                     String result = matches.get(0);
                     if ("open".equalsIgnoreCase(result.trim())) {
                         callback.onCommandRecognized("OPEN");
-                        instructionText.setText("Voice command 'open' recognized.");
                     } else {
-                        instructionText.setText("Unrecognized command: " + result);
                     }
                 } else {
-                    instructionText.setText("No voice input detected.");
                 }
             }
 

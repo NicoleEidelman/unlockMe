@@ -19,15 +19,13 @@ import java.util.Random;
 public class TwoFactorAuthenticator {
     private final Activity activity;
     private final CircleManager circleManager;
-    private final TextView instructionText;
 
     private static final int PERMISSION_REQUEST_PHONE = 200;
     private static final int PERMISSION_REQUEST_SMS = 201;
 
-    public TwoFactorAuthenticator(Activity activity, CircleManager circleManager, TextView instructionText) {
+    public TwoFactorAuthenticator(Activity activity, CircleManager circleManager) {
         this.activity = activity;
         this.circleManager = circleManager;
-        this.instructionText = instructionText;
     }
 
     public void initiate() {
@@ -50,7 +48,6 @@ public class TwoFactorAuthenticator {
             ActivityCompat.requestPermissions(activity,
                     new String[]{android.Manifest.permission.READ_PHONE_NUMBERS, android.Manifest.permission.READ_PHONE_STATE},
                     PERMISSION_REQUEST_PHONE);
-            instructionText.setText("Requesting phone number permission...");
             return null;
         }
 
@@ -74,7 +71,6 @@ public class TwoFactorAuthenticator {
                 .setPositiveButton("Send Code", (dialog, which) -> {
                     String userNumber = input.getText().toString().trim();
                     if (!userNumber.startsWith("+") || userNumber.length() < 11) {
-                        instructionText.setText("Enter a valid phone number.");
                     } else {
                         sendSMSAndVerify(userNumber, code);
                     }
@@ -86,12 +82,10 @@ public class TwoFactorAuthenticator {
     private void sendSMSAndVerify(String phoneNumber, String code) {
         if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.SEND_SMS}, PERMISSION_REQUEST_SMS);
-            instructionText.setText("Requesting SMS permission...");
             return;
         }
 
         SmsManager.getDefault().sendTextMessage(phoneNumber, null, "Your verification code is: " + code, null, null);
-        instructionText.setText("Verification code sent to: " + phoneNumber);
         showCodeDialog(code);
     }
 
@@ -114,10 +108,8 @@ public class TwoFactorAuthenticator {
                 String entered = input.getText().toString().trim();
                 if (entered.equals(expectedCode)) {
                     circleManager.fill(3);
-                    instructionText.setText("2FA verified successfully!");
                     dialog.dismiss();
                 } else {
-                    instructionText.setText("Incorrect code. Try again.");
                 }
             });
         });

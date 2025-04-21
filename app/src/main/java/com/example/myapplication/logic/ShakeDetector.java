@@ -14,16 +14,14 @@ public class ShakeDetector implements SensorEventListener {
     private final SensorManager sensorManager;
     private final Sensor accelerometer;
     private final OnShakeListener listener;
-    private final TextView instructionText;
     private long lastShakeTime;
 
     public interface OnShakeListener {
         void onShake();
     }
 
-    public ShakeDetector(Context context, OnShakeListener listener, TextView instructionText) {
+    public ShakeDetector(Context context, OnShakeListener listener) {
         this.listener = listener;
-        this.instructionText = instructionText;
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager != null ? sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) : null;
     }
@@ -57,6 +55,5 @@ public class ShakeDetector implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
     public void showInstruction() {
-        instructionText.setText("Please shake your device now to activate this step.");
     }
 }

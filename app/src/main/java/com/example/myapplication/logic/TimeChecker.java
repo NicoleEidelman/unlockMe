@@ -10,12 +10,10 @@ import java.util.Calendar;
 public class TimeChecker {
     private final Context context;
     private final CircleManager circleManager;
-    private final TextView instructionText;
 
-    public TimeChecker(Context context, CircleManager circleManager, TextView instructionText) {
+    public TimeChecker(Context context, CircleManager circleManager) {
         this.context = context;
         this.circleManager = circleManager;
-        this.instructionText = instructionText;
     }
 
     public void check() {
@@ -27,9 +25,7 @@ public class TimeChecker {
 
             if (minute % 2 != 0 || sum % 2 != 0) {
                 circleManager.fill(1);
-                instructionText.setText("Time condition met. Sum of digits: " + sum);
             } else {
-                instructionText.setText("Time condition not met.");
             }
         });
     }

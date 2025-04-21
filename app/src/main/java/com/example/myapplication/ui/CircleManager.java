@@ -23,14 +23,12 @@ public class CircleManager {
     private TextView successMessage;
     private TextView successSubMessage;
     private boolean animationInProgress = false;
-    private final TextView instructionText;
 
 
-    public CircleManager(ImageView[] circles, Context context, TextView instructionText) {
+    public CircleManager(ImageView[] circles, Context context) {
         this.circles = circles;
         this.filled = new boolean[circles.length];
         this.context = context;
-        this.instructionText = instructionText;
         View rootView = circles[0].getRootView();
         this.lockIcon = rootView.findViewById(R.id.lockIcon);
         this.successMessage = rootView.findViewById(R.id.successMessage);
@@ -40,7 +38,6 @@ public class CircleManager {
     public CircleManager(ImageView[] circles, TextView instructionText) {
         this.circles = circles;
         this.filled = new boolean[circles.length];
-        this.instructionText = instructionText;
     }
 
     public void fill(int index) {
@@ -52,7 +49,7 @@ public class CircleManager {
         circles[index].startAnimation(anim);
         filled[index] = true;
 
-        // Check if all circles are filled
+
         checkCompletion();
     }
 
@@ -61,7 +58,6 @@ public class CircleManager {
 
         if (isFilled(index)) {
             vibrate();
-            instructionText.setText("This step is already completed.");
         } else {
             if (onConditionValid != null) {
                 onConditionValid.run();
@@ -74,12 +70,13 @@ public class CircleManager {
         return filled[index];
     }
 
-    private void vibrate() {
+    public void vibrate() {
         Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         if (v != null) v.vibrate(200);
     }
 
     private void checkCompletion() {
+        //vibrate();
         if (animationInProgress) return;
 
         boolean allFilled = true;
@@ -92,11 +89,13 @@ public class CircleManager {
 
         if (allFilled) {
             animationInProgress = true;
-            startCompletionAnimation();
+            new Handler().postDelayed(this::startCompletionAnimation, 900);
+
         }
     }
 
     private void startCompletionAnimation() {
+
         // First, hide all circles and texts immediately
         for (int i = 1; i <= 6; i++) {
             View container = circles[i-1].getRootView().findViewWithTag("circle" + i + "_container");
@@ -106,7 +105,6 @@ public class CircleManager {
         }
 
         // Hide instruction text
-        instructionText.setVisibility(View.GONE);
 
         // Hide the entire column of circles
         View rootView = circles[0].getRootView();

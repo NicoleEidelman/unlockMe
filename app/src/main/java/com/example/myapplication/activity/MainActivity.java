@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     private TwoFactorAuthenticator twoFactorAuthenticator;
     private ChargingStatusChecker chargingStatusChecker;
     private VoiceCommandRecognizer voiceCommandRecognizer;
-    private TextView instructionText;
 
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 1;
 
@@ -34,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        instructionText = findViewById(R.id.instructionText);
 
         FrameLayout[] frameCircles = new FrameLayout[]{
                 findViewById(R.id.circle1),
@@ -50,17 +48,16 @@ public class MainActivity extends AppCompatActivity {
             circles[i] = (ImageView) frameCircles[i].getChildAt(0); // assumes the first child is the icon
         }
 
-        circleManager = new CircleManager(circles, this, instructionText);
+        circleManager = new CircleManager(circles, this);
 
         voiceCommandRecognizer = new VoiceCommandRecognizer(this,
-                command -> circleManager.fillCircleIfNotFilled(5, () -> circleManager.fill(5)),
-                instructionText);
+                command -> circleManager.fillCircleIfNotFilled(5, () -> circleManager.fill(5)));
 
-        wifiChecker = new WifiChecker(this, circleManager, instructionText);
-        timeChecker = new TimeChecker(this, circleManager, instructionText);
-        shakeDetector = new ShakeDetector(this, () -> circleManager.fill(2), instructionText);
-        twoFactorAuthenticator = new TwoFactorAuthenticator(this, circleManager, instructionText);
-        chargingStatusChecker = new ChargingStatusChecker(this, circleManager, instructionText);
+        wifiChecker = new WifiChecker(this, circleManager);
+        timeChecker = new TimeChecker(this, circleManager);
+        shakeDetector = new ShakeDetector(this, () -> circleManager.fill(2));
+        twoFactorAuthenticator = new TwoFactorAuthenticator(this, circleManager);
+        chargingStatusChecker = new ChargingStatusChecker(this, circleManager);
 
 
         String[] permissions = new String[]{
@@ -80,25 +77,26 @@ public class MainActivity extends AppCompatActivity {
     public void onCircleClick(View view) {
         int id = view.getId();
         if (id == R.id.circle1) {
-            instructionText.setText("Checking your Wi-Fi connection...");
+            circleManager.vibrate();
             circleManager.fillCircleIfNotFilled(0, () -> wifiChecker.check());
         } else if (id == R.id.circle2) {
-            instructionText.setText("Checking if the current time matches the security condition...");
+            circleManager.vibrate();
             circleManager.fillCircleIfNotFilled(1, () -> timeChecker.check());
         } else if (id == R.id.circle3) {
+            circleManager.vibrate();
             shakeDetector.showInstruction();
             circleManager.fillCircleIfNotFilled(2, null);
         } else if (id == R.id.circle4) {
-            instructionText.setText("Starting two-factor authentication...");
+            circleManager.vibrate();
             circleManager.fillCircleIfNotFilled(3, () -> twoFactorAuthenticator.initiate());
         } else if (id == R.id.circle5) {
-            instructionText.setText("Checking charging status...");
+            circleManager.vibrate();
             circleManager.fillCircleIfNotFilled(4, () -> chargingStatusChecker.check());
         }
     }
 
     public void onVoiceClick(View view) {
-        instructionText.setText("Say 'open' to complete the final step.");
+        circleManager.vibrate();
         voiceCommandRecognizer.startListening();
     }
 

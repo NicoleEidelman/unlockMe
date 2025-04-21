@@ -11,13 +11,11 @@ import com.example.myapplication.ui.CircleManager;
 public class ChargingStatusChecker {
     private final Context context;
     private final CircleManager circleManager;
-    private final TextView instructionText;
 
 
-    public ChargingStatusChecker(Context context, CircleManager circleManager, TextView instructionText) {
+    public ChargingStatusChecker(Context context, CircleManager circleManager) {
         this.context = context;
         this.circleManager = circleManager;
-        this.instructionText = instructionText;
     }
 
 
@@ -29,9 +27,8 @@ public class ChargingStatusChecker {
             boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL;
             if (isCharging) {
                 circleManager.fill(4);
-                instructionText.setText("Device is charging.");
             } else {
-                instructionText.setText("Device is not charging.");
+
             }
         });
     }

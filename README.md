@@ -1,4 +1,4 @@
-# AndroidVoiceAuthApp
+# AndroidMultiStepAuthenticationProcess
 
 A futuristic Android application that guides users through a **multi-step authentication process** using real-time checks and intuitive interactions. Each step is visualized through circular indicators and animated feedback. Once all checks are passed, a dynamic unlocking animation is triggered.
 

@@ -28,12 +28,6 @@ All six circles animate outwards before revealing a lock and success message.
 
 ---
 
-## 📸 Screenshots
-
-_Coming soon..._  
-(You can add screenshots from your emulator or device here)
-
----
 
 ## 🚀 Getting Started
 

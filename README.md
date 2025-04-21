@@ -67,14 +67,16 @@ git clone https://github.com/NicoleEidelman/unlockMe.git
 
 ---
 
-##  Structure Overview
+##  Project Structure Overview
+MainActivity.java – Central activity and UI logic
 
-- `MainActivity.java` – central activity and UI logic
-- `CircleManager.java` – UI state + animation manager
-- `VoiceCommandRecognizer.java` – speech recognition logic
-- `WifiChecker.java`, `TimeChecker.java`, `ShakeDetector.java`, `ChargingStatusChecker.java` – logic modules
-- `TwoFactorAuthenticator.java` – handles SMS-based verification
+CircleManager.java – UI state + animation manager
 
+VoiceCommandRecognizer.java – Speech recognition logic
+
+WifiChecker.java, TimeChecker.java, ShakeDetector.java, ChargingStatusChecker.java – Logic modules
+
+TwoFactorAuthenticator.java – Handles SMS-based verification
 ---
 
 ##  Future Ideas

@@ -29,7 +29,7 @@ All six circles animate outwards before revealing a lock and success message.
 ---
 
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Android Studio
